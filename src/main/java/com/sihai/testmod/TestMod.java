@@ -31,7 +31,6 @@ public class TestMod
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final RegistryObject<Block> myblock = BLOCKS.register("myblock",()-> new Block(BlockBehaviour.Properties.of().strength(3.0f).sound(SoundType.CROP)));
     public static final RegistryObject<Item> myblockitem = ITEMS.register("myblockitem",()-> new BlockItem(myblock.get(), new Item.Properties()));
-
     public TestMod()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

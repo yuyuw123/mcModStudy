@@ -1,3 +1,4 @@
 {
-  "block.testmod.myblock": "我的第一个方块"
+  "block.testmod.myblock": "我的第一个方块",
+  "item.testmod.myitem": "第一个物品"
 }

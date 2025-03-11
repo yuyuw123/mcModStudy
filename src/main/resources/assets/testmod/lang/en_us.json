@@ -1,3 +1,7 @@
 {
-  "block.testmod.myblock": "myfirstblock"
+  "block.testmod.myblock": "myfirstblock",
+  "testmod": "mytabname",
+  "testmod": "mytabname",
+  "mytab": "testmod",
+  "灵魂工艺": "testmod"
 }

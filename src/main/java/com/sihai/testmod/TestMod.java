@@ -1,10 +1,9 @@
 package com.sihai.testmod;
 
 import com.mojang.logging.LogUtils;
-import item.myitem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,32 +29,35 @@ public class TestMod
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    //public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    //public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
-    public static final RegistryObject<Block> myblock = BLOCKS.register("myblock",()-> new Block(BlockBehaviour.Properties.of().strength(3.0f).sound(SoundType.CROP)));
-    public static final RegistryObject<Item> myblockitem = ITEMS.register("myblock",()-> new BlockItem(myblock.get(), new Item.Properties()));
+    //public static final RegistryObject<Block> myblock = BLOCKS.register("myblock",()-> new Block(BlockBehaviour.Properties.of().strength(3.0f).sound(SoundType.CROP)));
+    //public static final RegistryObject<Item> myblockitem = ITEMS.register("myblock",()-> new BlockItem(myblock.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> cowItem = ITEMS.register("myitem",()-> new myitem(new Item.Properties()));
+    //public static final RegistryObject<Item> myitem = ITEMS.register("myitem",()-> new myitem(new Item.Properties()));
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,MODID);
+    private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,MODID);
+    public static final RegistryObject<Item> cow_soul = ITEMS.register("cow_soul",()-> new Item(new Item.Properties()));
+
+    public static final RegistryObject<CreativeModeTab> mytab = CREATIVE_MODE_TABS.register("mytab",()-> CreativeModeTab.builder()
+            .title(Component.translatable("mytab"))
+            .icon(()->new ItemStack(cow_soul.get()))
+            .displayItems((parm,output)-> {
+                output.accept(cow_soul.get());
+            })
+            .build());
+
+
     public TestMod()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ITEMS.register(bus);
-        BLOCKS.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
+        //ITEMS.register(bus);
+        //BLOCKS.register(bus);
         //bus.addListener(this::addCreativeTab);
-        bus.register(TestMod.class);
-    }
-    @SubscribeEvent
-    public static void addCreativeTab(BuildCreativeModeTabContentsEvent event){
-        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
-            event.accept(myblock);
-        }
-    }
-    @SubscribeEvent
-    public static void addItemToCreativeTab(BuildCreativeModeTabContentsEvent event){
-        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
-            event.accept(cowItem);
-        }
+        //bus.register(TestMod.class);
     }
 }

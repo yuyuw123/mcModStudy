@@ -3,13 +3,16 @@ package com.sihai.testmod;
 import com.mojang.logging.LogUtils;
 import item.myitem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -34,13 +37,25 @@ public class TestMod
     public static final RegistryObject<Block> myblock = BLOCKS.register("myblock",()-> new Block(BlockBehaviour.Properties.of().strength(3.0f).sound(SoundType.CROP)));
     public static final RegistryObject<Item> myblockitem = ITEMS.register("myblock",()-> new BlockItem(myblock.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> myitem = ITEMS.register("myitem",()-> new myitem(new Item.Properties()));
+    public static final RegistryObject<Item> cowItem = ITEMS.register("myitem",()-> new myitem(new Item.Properties()));
     public TestMod()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ITEMS.register(bus);
         BLOCKS.register(bus);
-
-        //MinecraftForge.EVENT_BUS.register(myblockitem);
+        //bus.addListener(this::addCreativeTab);
+        bus.register(TestMod.class);
+    }
+    @SubscribeEvent
+    public static void addCreativeTab(BuildCreativeModeTabContentsEvent event){
+        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
+            event.accept(myblock);
+        }
+    }
+    @SubscribeEvent
+    public static void addItemToCreativeTab(BuildCreativeModeTabContentsEvent event){
+        if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
+            event.accept(cowItem);
+        }
     }
 }

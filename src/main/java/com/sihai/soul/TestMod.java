@@ -1,31 +1,25 @@
-package com.sihai.testmod;
+package com.sihai.soul;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.MixinEnvironment;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(TestMod.MODID)
 public class TestMod
 {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "testmod";
+    public static final String MODID = "soul";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
@@ -47,9 +41,9 @@ public class TestMod
 
     public static final RegistryObject<Item> pig_soul = ITEMS.register("pig_soul",()-> new Item(new Item.Properties()));
 
-
+    //以下部分为添加创造模式物品栏，顺便将模组物品添加入其中
     public static final RegistryObject<CreativeModeTab> mytab = CREATIVE_MODE_TABS.register("mytab",()-> CreativeModeTab.builder()
-            .title(Component.translatable("mytab"))
+            .title(Component.translatable("soul"))
             .icon(()->new ItemStack(cow_soul.get()))
             .displayItems((parm,output)-> {
                 output.accept(cow_soul.get());
@@ -64,9 +58,5 @@ public class TestMod
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ITEMS.register(bus);
         CREATIVE_MODE_TABS.register(bus);
-        //ITEMS.register(bus);
-        //BLOCKS.register(bus);
-        //bus.addListener(this::addCreativeTab);
-        //bus.register(TestMod.class);
     }
 }

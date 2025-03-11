@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "testmod:block/myblock"
+      "model": "soul:block/myblock"
     }
   }
 }

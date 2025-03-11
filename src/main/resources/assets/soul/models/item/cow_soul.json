@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "testmod:item/sheep_soul"
+    "layer0": "soul:item/cow_soul"
   }
 }

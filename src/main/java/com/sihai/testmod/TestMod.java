@@ -38,14 +38,24 @@ public class TestMod
 
     //public static final RegistryObject<Item> myitem = ITEMS.register("myitem",()-> new myitem(new Item.Properties()));
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,MODID);
+    //public static final DeferredRegister<Item> CHICKEN_SOUL = DeferredRegister.create(ForgeRegistries.ITEMS,MODID);
+
     private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,MODID);
     public static final RegistryObject<Item> cow_soul = ITEMS.register("cow_soul",()-> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> chicken_soul = ITEMS.register("chicken_soul",()-> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sheep_soul = ITEMS.register("sheep_soul",()-> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> pig_soul = ITEMS.register("pig_soul",()-> new Item(new Item.Properties()));
+
 
     public static final RegistryObject<CreativeModeTab> mytab = CREATIVE_MODE_TABS.register("mytab",()-> CreativeModeTab.builder()
             .title(Component.translatable("mytab"))
             .icon(()->new ItemStack(cow_soul.get()))
             .displayItems((parm,output)-> {
                 output.accept(cow_soul.get());
+                output.accept(chicken_soul.get());
+                output.accept(sheep_soul.get());
+                output.accept(pig_soul.get());
             })
             .build());
 

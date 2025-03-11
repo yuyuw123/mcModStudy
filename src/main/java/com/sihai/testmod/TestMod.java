@@ -59,7 +59,6 @@ public class TestMod
             })
             .build());
 
-
     public TestMod()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
